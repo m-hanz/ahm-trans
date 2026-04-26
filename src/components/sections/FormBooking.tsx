@@ -128,7 +128,7 @@ const FormBooking = ({ defaultPaket = "" }: FormBookingProps) => {
                                     type="text"
                                     name="paket"
                                     value={formData.paket}
-                                    className={`${inputClass} border-white/10 text-gray-400 cursor-default`}
+                                    className={`${inputClass} border-white/10 text-gray-400 italic cursor-no-drop`}
                                 />
                             </div>
                             <div>

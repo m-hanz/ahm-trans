@@ -57,7 +57,7 @@ const Navbar = () => {
                     className={`mx-auto pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] 
               flex items-center justify-between w-full max-w-6xl relative z-[110]
               ${
-                  isScrolled && !isOpen // KUNCI PERBAIKAN 1: Hilangkan styling pill saat menu terbuka
+                  isScrolled && !isOpen
                       ? "bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-6 py-3"
                       : "bg-transparent border-transparent px-2 py-4"
               }`}
@@ -77,14 +77,14 @@ const Navbar = () => {
                     </Link>
 
                     {/* DESKTOP NAV - Elegant Line Hover */}
-                    <div className="hidden md:flex items-center gap-8 lg:gap-12">
+                    <div className="hidden md:flex items-center gap-9">
                         {NAV_LINKS.map((link) => (
                             <Link
                                 key={link.key}
                                 href={link.href}
                                 className="relative group py-2"
                             >
-                                <span className="text-[13px] font-semibold uppercase tracking-[0.15em] text-zinc-500 group-hover:text-zinc-900 transition-colors duration-300">
+                                <span className="text-[12px] font-semibold uppercase tracking-[0.15em] text-zinc-500 group-hover:text-zinc-900 transition-colors duration-300">
                                     {link.label}
                                 </span>
                                 {/* Animated Underline */}
@@ -96,7 +96,7 @@ const Navbar = () => {
                     {/* DESKTOP CTA BUTTON */}
                     <div className="hidden md:block">
                         <Link
-                            href="https://wa.me/6285607027172"
+                            href="https://wa.me/6285746828292"
                             className="px-6 py-2.5 rounded-full bg-zinc-900 text-white text-sm font-medium tracking-wide hover:bg-orange-500 hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300"
                         >
                             Hubungi Kami
@@ -128,7 +128,7 @@ const Navbar = () => {
                 </nav>
             </header>
 
-            {/* KUNCI PERBAIKAN 2: Overlay dipindahkan sepenuhnya ke luar <header> */}
+            {/* MOBILE NAV */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -157,7 +157,7 @@ const Navbar = () => {
                                     <Link
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
-                                        className="relative text-3xl font-light tracking-tight text-zinc-800 hover:text-orange-500 transition-colors duration-300 group flex items-center justify-center"
+                                        className="relative text-2xl font-semibold uppercase tracking-widest text-zinc-600 hover:text-orange-500 transition-colors duration-300 group flex items-center justify-center"
                                     >
                                         {link.label}
                                     </Link>
@@ -167,10 +167,10 @@ const Navbar = () => {
                             {/* MOBILE CTA BUTTON */}
                             <motion.div
                                 variants={itemVariants}
-                                className="mt-8 w-full max-w-xs"
+                                className="mt-6 w-full max-w-xs"
                             >
                                 <Link
-                                    href="https://wa.me/6285607027172"
+                                    href="https://wa.me/6285746828292"
                                     onClick={() => setIsOpen(false)}
                                     className="w-full flex items-center justify-center py-4 rounded-full bg-zinc-900 text-white text-lg font-medium tracking-wide hover:bg-orange-500 transition-all duration-300"
                                 >

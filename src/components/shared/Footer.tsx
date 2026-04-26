@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -41,7 +40,8 @@ const Footer = () => {
                         <ul className="flex flex-col gap-4">
                             {[
                                 "Destinasi",
-                                "Paket Tour",
+                                "Paket",
+                                "Transport",
                                 "Gallery",
                                 "Contact",
                             ].map((item) => (
@@ -68,9 +68,9 @@ const Footer = () => {
                                     Office
                                 </p>
                                 <p className="text-sm font-medium group-hover:text-white transition-colors leading-snug">
-                                    Senayan Regency, Kav 12
-                                    <br />
-                                    Jakarta Selatan, Indonesia
+                                    Jl. Jatirejoyoso No.264, Dawuhan,
+                                    Jatirejoyoso, Kepanjen, Malang, Jawa Timur
+                                    65163
                                 </p>
                             </div>
                             <div className="group cursor-pointer">
@@ -78,16 +78,25 @@ const Footer = () => {
                                     Direct Inquiries
                                 </p>
                                 <p className="text-sm font-medium group-hover:text-orange-500 transition-colors uppercase tracking-wider">
-                                    info@ahmtrans.com
+                                    ahmadhudin219@gmail.com
                                 </p>
                             </div>
 
                             {/* Social Icons with Minimal Circle Style */}
                             <div className="flex gap-4 pt-4">
                                 {[
-                                    { icon: <FaInstagram />, href: "#" },
-                                    { icon: <FaFacebookF />, href: "#" },
-                                    { icon: <FaWhatsapp />, href: "#" },
+                                    {
+                                        icon: <FaInstagram />,
+                                        href: "https://www.instagram.com/ahmdhudin",
+                                    },
+                                    {
+                                        icon: <FaTiktok />,
+                                        href: "https://www.tiktok.com/@ahmadhudin0",
+                                    },
+                                    {
+                                        icon: <FaWhatsapp />,
+                                        href: "https://wa.me/6285746828292",
+                                    },
                                 ].map((social, idx) => (
                                     <Link
                                         key={idx}
@@ -107,13 +116,13 @@ const Footer = () => {
                     <div className="flex gap-8 text-[9px] font-mono uppercase tracking-[0.3em] text-gray-600">
                         <Link
                             href="/privacy"
-                            className="hover:text-white transition-colors"
+                            className="hover:text-orange-500 transition-colors duration-300"
                         >
                             Privacy Policy
                         </Link>
                         <Link
                             href="/terms"
-                            className="hover:text-white transition-colors"
+                            className="hover:text-orange-500 transition-colors duration-300"
                         >
                             Terms of Service
                         </Link>

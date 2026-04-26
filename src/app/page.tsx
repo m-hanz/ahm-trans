@@ -52,7 +52,7 @@ export default function Home() {
             <section className="relative h-[110vh] flex items-center overflow-hidden px-6 md:px-16">
                 <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
                     <Image
-                        src="/images/hero.jpg" // Pastikan path ini benar
+                        src="/images/hero.jpg"
                         alt="Luxury Travel"
                         fill
                         className="object-cover opacity-60 scale-110"
@@ -117,7 +117,7 @@ export default function Home() {
                                 className={`flex items-center border-b transition-all duration-500 pb-1.5 ${isSearching ? "border-orange-500" : "border-white/20 group-hover:border-white/40"}`}
                             >
                                 <HiSearch
-                                    className={`${isSearching ? "text-orange-500" : "text-gray-500"} transition-colors`}
+                                    className={`${isSearching ? "text-orange-500" : "text-gray-300"} transition-colors`}
                                     size={14}
                                 />
                                 <input
@@ -125,7 +125,7 @@ export default function Home() {
                                     placeholder="Cari..."
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
-                                    className="bg-transparent px-3 w-full outline-none font-mono text-[10px] uppercase tracking-[0.2em] placeholder:text-gray-700 text-white"
+                                    className="bg-transparent px-3 w-full outline-none font-mono text-[10px] uppercase tracking-[0.2em] placeholder:text-gray-300 text-white"
                                 />
                                 {query && (
                                     <button

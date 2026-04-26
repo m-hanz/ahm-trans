@@ -1,23 +1,33 @@
 "use client";
 
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { TOUR_PACKAGES } from "@/constants/data";
 import FormBooking from "@/components/sections/FormBooking";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+    motion,
+    AnimatePresence,
+    useScroll,
+    useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import {
-    HiOutlineCalendar,
     HiOutlineMap,
     HiOutlineClock,
     HiOutlineArrowLeft,
     HiOutlineCheckCircle,
     HiOutlineUserGroup,
+    HiX,
+    HiOutlineSearch,
 } from "react-icons/hi";
 
 const DetailPaket = () => {
     const params = useParams();
     const router = useRouter();
     const data = TOUR_PACKAGES.find((p) => p.id === params.id);
+
+    // State untuk Lightbox Modal
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
     // Scroll Animation for Hero
     const { scrollY } = useScroll();
@@ -111,8 +121,48 @@ const DetailPaket = () => {
             <section className="py-24 px-6 md:px-16 bg-white text-[#050505] rounded-t-[3rem] -mt-12 relative z-20">
                 <div className="max-w-[1800px] mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-                        {/* LEFT COLUMN: ITINERARY & INCLUDES */}
+                        {/* LEFT COLUMN */}
                         <div className="lg:col-span-7">
+                            {/* OVERVIEW & IMAGE PREVIEW (STYLE GALLERY) */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="mb-20"
+                            >
+                                <p className="text-orange-600 font-mono text-xs uppercase tracking-[0.4em] mb-4">
+                                    Trip Overview
+                                </p>
+                                <p className="text-xl md:text-2xl font-light leading-relaxed text-gray-700 mb-10">
+                                    {data.description}
+                                </p>
+
+                                {/* Image Trigger (Format Gallery) */}
+                                <div
+                                    onClick={() => setIsLightboxOpen(true)}
+                                    className="relative group cursor-pointer overflow-hidden rounded-[2.5rem] bg-[#111] border border-black/5 shadow-2xl inline-block w-full max-w-2xl"
+                                >
+                                    <div className="relative aspect-auto">
+                                        <img
+                                            src={data.image}
+                                            alt={data.title}
+                                            className="w-full h-auto object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                                        />
+                                    </div>
+
+                                    {/* Overlay Info Sesuai Style Gallery/Home */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                                        <p className="text-[10px] font-mono text-orange-400 uppercase tracking-[0.3em] mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                            Click to Preview
+                                        </p>
+                                        <h3 className="text-xl font-bold text-white uppercase tracking-tighter leading-none mb-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700 delay-75">
+                                            {data.title}
+                                        </h3>
+                                        <div className="h-px w-0 bg-white group-hover:w-full transition-all duration-1000" />
+                                    </div>
+                                </div>
+                            </motion.div>
+
                             {/* ITINERARY */}
                             <div className="mb-24">
                                 <p className="text-orange-600 font-mono text-xs uppercase tracking-[0.4em] mb-4">
@@ -122,7 +172,6 @@ const DetailPaket = () => {
                                     The{" "}
                                     <span className="italic">Itinerary.</span>
                                 </h2>
-
                                 <div className="space-y-12 relative before:absolute before:left-[1.65rem] before:top-4 before:bottom-4 before:w-px before:bg-black/10">
                                     {data.itinerary.map((item, idx) => (
                                         <motion.div
@@ -149,7 +198,7 @@ const DetailPaket = () => {
                                 </div>
                             </div>
 
-                            {/* INCLUDES / FACILITIES (DIAMBIL DARI DATA.TS) */}
+                            {/* INCLUDES */}
                             <div className="pt-20 border-t border-gray-100">
                                 <p className="text-orange-600 font-mono text-xs uppercase tracking-[0.4em] mb-4">
                                     Exclusive Facilities
@@ -158,7 +207,6 @@ const DetailPaket = () => {
                                     What's{" "}
                                     <span className="italic">Included.</span>
                                 </h2>
-
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {data.includes.map((item, idx) => (
                                         <motion.div
@@ -191,7 +239,6 @@ const DetailPaket = () => {
                                     className="bg-[#050505] p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden"
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl -mr-16 -mt-16" />
-
                                     <div className="relative z-10">
                                         <p className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] mb-6">
                                             Reservation
@@ -202,7 +249,6 @@ const DetailPaket = () => {
                                                 Voyage.
                                             </span>
                                         </h3>
-
                                         <div className="booking-form-wrapper">
                                             <FormBooking
                                                 defaultPaket={data.title}
@@ -210,18 +256,68 @@ const DetailPaket = () => {
                                         </div>
                                     </div>
                                 </motion.div>
-
-                                <p className="mt-8 text-center text-gray-400 font-mono text-[10px] uppercase tracking-widest">
-                                    Support 24/7 — Min. 13 Participants Required
-                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            {/* --- LIGHTBOX MODAL (FORMAT GALLERY) --- */}
+            <AnimatePresence>
+                {isLightboxOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+                        onClick={() => setIsLightboxOpen(false)}
+                    >
+                        <button
+                            className="absolute top-8 right-8 text-white/50 hover:text-orange-500 transition-colors z-[110] flex items-center gap-2 group"
+                            onClick={() => setIsLightboxOpen(false)}
+                        >
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all">
+                                Close
+                            </span>
+                            <HiX size={32} />
+                        </button>
+
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            className="max-w-5xl w-full flex flex-col items-center"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="relative w-full rounded-[2rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/10">
+                                <img
+                                    src={data.image}
+                                    alt={data.title}
+                                    className="max-h-[80vh] w-full object-contain bg-[#0a0a0a]"
+                                />
+                            </div>
+                            <div className="mt-8 text-center">
+                                <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter italic text-white">
+                                    {data.title}
+                                </h3>
+                                <div className="flex items-center justify-center gap-4 mt-4">
+                                    <div className="h-px w-8 bg-orange-500"></div>
+                                    <p className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.4em]">
+                                        Trip Documentation
+                                    </p>
+                                    <div className="h-px w-8 bg-orange-500"></div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* --- CUSTOM STYLES --- */}
             <style jsx global>{`
+                .italic {
+                    font-style: italic;
+                }
                 .booking-form-wrapper input,
                 .booking-form-wrapper select,
                 .booking-form-wrapper textarea {

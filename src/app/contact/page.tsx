@@ -73,13 +73,13 @@ const ContactPage = () => {
                                 {
                                     icon: <HiPhone />,
                                     title: "Telepon / WA",
-                                    value: "+62 856-0702-7172",
+                                    value: "+62 857-4682-8292",
                                     label: "DIRECT LINE",
                                 },
                                 {
                                     icon: <HiLocationMarker />,
                                     title: "Alamat Kantor",
-                                    value: "Jl. Wisata Indah No. 123, Kota Budaya, Indonesia",
+                                    value: "Jl. Jatirejoyoso No.264, Dawuhan, Jatirejoyoso, Kepanjen, Malang, Jawa Timur 65163",
                                     label: "HEADQUARTER",
                                 },
                                 {
@@ -212,7 +212,7 @@ const ContactPage = () => {
                     {/* MAP SECTION - Tetap sama */}
                     <div className="lg:col-span-7 h-[400px] lg:h-[700px] grayscale invert contrast-125 opacity-80 rounded-[3rem] overflow-hidden border border-white/10">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.33825026937!2d114.2863901602492!3d-8.211756885375936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd15bf2613867c7%3A0x63335b1d5c074df0!2sBanyuwangi%2C%20Kabupaten%20Banyuwangi%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1714000000000!5m2!1sid!2sid"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.046830504789!2d112.5694721!3d-8.0967701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e789f50689b657d%3A0xe54e661642236357!2sJatirejoyoso%2C%20Kepanjen%2C%20Malang%20Regency%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1710000000000!5m2!1sen!2sid"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}

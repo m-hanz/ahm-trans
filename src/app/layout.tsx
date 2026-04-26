@@ -7,7 +7,7 @@ import Footer from "@/components/shared/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "AHM Trans | Biro Perjalanan Wisata Modern",
+    title: "AHM Trans | Agen Perjalanan Wisata Modern",
     description: "Eksplorasi destinasi terbaik bersama AHM Trans",
 };
 

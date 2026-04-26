@@ -16,7 +16,7 @@ interface InquiryData {
 }
 
 export const sendWhatsAppMessage = (data: BookingData | InquiryData) => {
-    const phoneNumber = "6285607027172";
+    const phoneNumber = "6285746828292";
     let text = "";
 
     if (data.type === "BOOKING") {
