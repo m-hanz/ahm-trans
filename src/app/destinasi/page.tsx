@@ -67,7 +67,7 @@ const DestinasiPage = () => {
                                         {/* Floating Badge */}
                                         <div className="absolute top-6 right-6 bg-black/20 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full">
                                             <p className="text-[9px] font-mono tracking-widest uppercase">
-                                                IDR{" "}
+                                                Start From IDR{" "}
                                                 {item.price.toLocaleString(
                                                     "id-ID",
                                                 )}

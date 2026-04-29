@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import Image from "next/image";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -59,21 +60,23 @@ const Navbar = () => {
               ${
                   isScrolled && !isOpen
                       ? "bg-white/70 backdrop-blur-md border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-6 py-3"
-                      : "bg-transparent border-transparent px-2 py-4"
+                      : "bg-transparent border-transparent px-2 py-3 md:py-2"
               }`}
                 >
                     {/* LOGO */}
                     <Link
                         href="/"
                         onClick={() => setIsOpen(false)}
-                        className="relative flex items-center group"
+                        className="relative flex items-center group transition-transform duration-300 hover:scale-105"
                     >
-                        <span className="text-2xl font-black tracking-tighter text-zinc-900 transition-transform duration-300 group-hover:scale-105">
-                            AHM<span className="text-orange-500">.</span>
-                            <span className="font-light text-zinc-500">
-                                Trans
-                            </span>
-                        </span>
+                        <Image
+                            src="/logo.png" // Pastikan path file logo Anda benar
+                            alt="AHM Trans Logo"
+                            width={150} // Sesuaikan lebar logo
+                            height={50} // Sesuaikan tinggi logo
+                            className="w-auto h-11 md:h-12 object-contain" // h-8 untuk mobile, h-10 untuk desktop
+                            priority
+                        />
                     </Link>
 
                     {/* DESKTOP NAV - Elegant Line Hover */}

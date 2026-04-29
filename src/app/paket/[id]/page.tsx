@@ -12,24 +12,22 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import {
-    HiOutlineMap,
     HiOutlineClock,
     HiOutlineArrowLeft,
     HiOutlineCheckCircle,
     HiOutlineUserGroup,
     HiX,
-    HiOutlineSearch,
+    HiOutlineMinusCircle,
+    HiOutlineLocationMarker,
 } from "react-icons/hi";
 
 const DetailPaket = () => {
     const params = useParams();
     const router = useRouter();
+
     const data = TOUR_PACKAGES.find((p) => p.id === params.id);
 
-    // State untuk Lightbox Modal
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-
-    // Scroll Animation for Hero
     const { scrollY } = useScroll();
     const yImage = useTransform(scrollY, [0, 500], [0, 200]);
 
@@ -84,33 +82,26 @@ const DetailPaket = () => {
                             {data.title}
                         </h1>
 
-                        <div className="flex flex-wrap gap-8 py-6 border-t border-white/10 mt-4">
+                        <div className="flex flex-wrap gap-8 py-6 border-t border-white/10 mt-4 font-mono text-[10px] uppercase tracking-widest">
                             <div className="flex items-center gap-3">
                                 <HiOutlineClock
                                     className="text-orange-500"
                                     size={18}
                                 />
-                                <span className="text-[10px] font-mono uppercase tracking-widest">
-                                    {data.duration}
-                                </span>
+                                <span>{data.duration}</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <HiOutlineUserGroup
                                     className="text-orange-500"
                                     size={18}
                                 />
-                                <span className="text-[10px] font-mono uppercase tracking-widest text-orange-500 font-bold">
-                                    Min. 13 Pax
-                                </span>
+                                <span>Min. {data.minPax} Orang/Pax</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <HiOutlineMap
-                                    className="text-orange-500"
-                                    size={18}
-                                />
-                                <span className="text-[10px] font-mono uppercase tracking-widest">
-                                    Selected Destinations
+                                <span className="text-orange-500 font-bold text-lg tracking-tighter">
+                                    Rp {data.price.toLocaleString("id-ID")}
                                 </span>
+                                <span className="opacity-50">/ Pax</span>
                             </div>
                         </div>
                     </motion.div>
@@ -123,7 +114,6 @@ const DetailPaket = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
                         {/* LEFT COLUMN */}
                         <div className="lg:col-span-7">
-                            {/* OVERVIEW & IMAGE PREVIEW (STYLE GALLERY) */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -137,95 +127,89 @@ const DetailPaket = () => {
                                     {data.description}
                                 </p>
 
-                                {/* Image Trigger (Format Gallery) */}
+                                {/* IMAGE CONTAINER - UKURAN ASLI */}
                                 <div
                                     onClick={() => setIsLightboxOpen(true)}
-                                    className="relative group cursor-pointer overflow-hidden rounded-[2.5rem] bg-[#111] border border-black/5 shadow-2xl inline-block w-full max-w-2xl"
+                                    className="relative group cursor-pointer overflow-hidden rounded-[2rem] bg-gray-100 border border-black/5 shadow-xl inline-block w-full"
                                 >
-                                    <div className="relative aspect-auto">
-                                        <img
-                                            src={data.image}
-                                            alt={data.title}
-                                            className="w-full h-auto object-cover transition-transform duration-[1.5s] group-hover:scale-110"
-                                        />
-                                    </div>
-
-                                    {/* Overlay Info Sesuai Style Gallery/Home */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
-                                        <p className="text-[10px] font-mono text-orange-400 uppercase tracking-[0.3em] mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            Click to Preview
+                                    <Image
+                                        src={data.image}
+                                        alt={data.title}
+                                        width={1200}
+                                        height={800}
+                                        className="w-full h-auto object-contain transition-transform duration-[1.5s] group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8 text-white">
+                                        <p className="text-[10px] font-mono text-orange-400 uppercase tracking-[0.3em] mb-1">
+                                            View Full Image
                                         </p>
-                                        <h3 className="text-xl font-bold text-white uppercase tracking-tighter leading-none mb-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-700 delay-75">
+                                        <h3 className="text-lg font-bold uppercase tracking-tight">
                                             {data.title}
                                         </h3>
-                                        <div className="h-px w-0 bg-white group-hover:w-full transition-all duration-1000" />
                                     </div>
                                 </div>
                             </motion.div>
 
-                            {/* ITINERARY */}
+                            {/* DESTINATIONS */}
                             <div className="mb-24">
                                 <p className="text-orange-600 font-mono text-xs uppercase tracking-[0.4em] mb-4">
-                                    Curated Schedule
+                                    Destinations
                                 </p>
-                                <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-12">
-                                    The{" "}
-                                    <span className="italic">Itinerary.</span>
-                                </h2>
-                                <div className="space-y-12 relative before:absolute before:left-[1.65rem] before:top-4 before:bottom-4 before:w-px before:bg-black/10">
-                                    {data.itinerary.map((item, idx) => (
-                                        <motion.div
-                                            key={item.day}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: idx * 0.1 }}
-                                            className="flex gap-10 relative group"
+                                <div className="flex flex-wrap gap-3">
+                                    {data.destinations.map((dest, i) => (
+                                        <span
+                                            key={i}
+                                            className="flex items-center gap-2 px-5 py-2 bg-gray-100 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-600 border border-gray-200"
                                         >
-                                            <div className="flex-none w-14 h-14 bg-[#050505] text-white rounded-full flex items-center justify-center font-mono text-xs z-10 group-hover:bg-orange-500 transition-colors duration-500">
-                                                D{item.day}
-                                            </div>
-                                            <div className="pt-2">
-                                                <h4 className="text-[10px] font-mono uppercase tracking-[0.3em] text-orange-600 mb-2">
-                                                    Phase {item.day}
-                                                </h4>
-                                                <p className="text-xl font-light leading-relaxed text-gray-800 italic">
-                                                    "{item.activity}"
-                                                </p>
-                                            </div>
-                                        </motion.div>
+                                            <HiOutlineLocationMarker className="text-orange-500" />
+                                            {dest}
+                                        </span>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* INCLUDES */}
-                            <div className="pt-20 border-t border-gray-100">
-                                <p className="text-orange-600 font-mono text-xs uppercase tracking-[0.4em] mb-4">
-                                    Exclusive Facilities
-                                </p>
-                                <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter mb-12">
-                                    What's{" "}
-                                    <span className="italic">Included.</span>
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {data.includes.map((item, idx) => (
-                                        <motion.div
-                                            key={idx}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: idx * 0.05 }}
-                                            className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors"
-                                        >
-                                            <HiOutlineCheckCircle
-                                                className="text-orange-500 flex-none"
-                                                size={20}
-                                            />
-                                            <span className="text-sm font-medium text-gray-700 uppercase tracking-wide">
+                            {/* INCLUDES & EXCLUDES */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-20 border-t border-gray-100 mb-24">
+                                <div>
+                                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-8 italic">
+                                        What&apos;s{" "}
+                                        <span className="text-orange-500">
+                                            Included.
+                                        </span>
+                                    </h2>
+                                    <div className="space-y-4">
+                                        {data.includes.map((item, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="flex items-center gap-3 text-sm text-gray-600 font-medium uppercase tracking-wide"
+                                            >
+                                                <HiOutlineCheckCircle
+                                                    className="text-green-500 flex-none"
+                                                    size={20}
+                                                />
                                                 {item}
-                                            </span>
-                                        </motion.div>
-                                    ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-8 italic">
+                                        Excludes.
+                                    </h2>
+                                    <div className="space-y-4">
+                                        {data.exclude.map((item, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="flex items-center gap-3 text-sm text-gray-400 font-medium uppercase tracking-wide"
+                                            >
+                                                <HiOutlineMinusCircle
+                                                    className="text-red-400 flex-none"
+                                                    size={20}
+                                                />
+                                                {item}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,14 +222,13 @@ const DetailPaket = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     className="bg-[#050505] p-10 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden"
                                 >
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl -mr-16 -mt-16" />
                                     <div className="relative z-10">
                                         <p className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] mb-6">
                                             Reservation
                                         </p>
-                                        <h3 className="text-3xl font-bold uppercase tracking-tighter mb-8">
-                                            Start Your <br />{" "}
-                                            <span className="italic">
+                                        <h3 className="text-3xl font-bold uppercase tracking-tighter mb-8 leading-tight">
+                                            Start Your <br />
+                                            <span className="italic text-orange-500 underline decoration-white/20 underline-offset-8">
                                                 Voyage.
                                             </span>
                                         </h3>
@@ -262,7 +245,7 @@ const DetailPaket = () => {
                 </div>
             </section>
 
-            {/* --- LIGHTBOX MODAL (FORMAT GALLERY) --- */}
+            {/* LIGHTBOX MODAL */}
             <AnimatePresence>
                 {isLightboxOpen && (
                     <motion.div
@@ -272,76 +255,42 @@ const DetailPaket = () => {
                         className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
                         onClick={() => setIsLightboxOpen(false)}
                     >
-                        <button
-                            className="absolute top-8 right-8 text-white/50 hover:text-orange-500 transition-colors z-[110] flex items-center gap-2 group"
-                            onClick={() => setIsLightboxOpen(false)}
-                        >
-                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all">
-                                Close
-                            </span>
-                            <HiX size={32} />
+                        <button className="absolute top-8 right-8 text-white hover:text-orange-500 transition-colors z-[110]">
+                            <HiX size={40} />
                         </button>
-
                         <motion.div
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                            animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="max-w-5xl w-full flex flex-col items-center"
-                            onClick={(e) => e.stopPropagation()}
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="relative max-w-7xl w-full h-full flex items-center justify-center"
                         >
-                            <div className="relative w-full rounded-[2rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/10">
-                                <img
-                                    src={data.image}
-                                    alt={data.title}
-                                    className="max-h-[80vh] w-full object-contain bg-[#0a0a0a]"
-                                />
-                            </div>
-                            <div className="mt-8 text-center">
-                                <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter italic text-white">
-                                    {data.title}
-                                </h3>
-                                <div className="flex items-center justify-center gap-4 mt-4">
-                                    <div className="h-px w-8 bg-orange-500"></div>
-                                    <p className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.4em]">
-                                        Trip Documentation
-                                    </p>
-                                    <div className="h-px w-8 bg-orange-500"></div>
-                                </div>
-                            </div>
+                            <img
+                                src={data.image}
+                                alt={data.title}
+                                className="max-w-full max-h-full object-contain shadow-2xl rounded-lg"
+                            />
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* --- CUSTOM STYLES --- */}
             <style jsx global>{`
-                .italic {
-                    font-style: italic;
-                }
                 .booking-form-wrapper input,
                 .booking-form-wrapper select,
                 .booking-form-wrapper textarea {
-                    background: #f5f5f5 !important;
-                    border: 1px solid #eeeeee !important;
-                    color: black !important;
+                    background: #111 !important;
+                    border: 1px solid #222 !important;
+                    color: white !important;
                     border-radius: 1rem !important;
                     padding: 1rem !important;
-                    font-size: 12px !important;
                 }
                 .booking-form-wrapper button {
-                    background: #000000 !important;
+                    background: #f97316 !important;
                     color: white !important;
                     border-radius: 9999px !important;
-                    padding: 1.25rem !important;
-                    font-family: monospace !important;
-                    text-transform: uppercase !important;
-                    letter-spacing: 0.3em !important;
                     font-weight: bold !important;
-                    transition: all 0.5s !important;
-                }
-                .booking-form-wrapper button:hover {
-                    background: #f97316 !important;
-                    transform: translateY(-2px);
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.2em !important;
                 }
             `}</style>
         </div>
